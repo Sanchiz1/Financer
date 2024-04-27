@@ -10,9 +10,11 @@ namespace Domain.Categories
         public Description Description { get; private set; }
         public OperationType OperationType { get; private set; }
 
-        public Category(Name name, Description description, OperationType operationType)
+        private Category() { }
+
+        public Category(Guid userId, Name name, Description description, OperationType operationType)
         {
-            this.UserId = Guid.NewGuid();
+            this.UserId = userId;
             this.Name = name;
             this.Description = description;
             this.OperationType = operationType;

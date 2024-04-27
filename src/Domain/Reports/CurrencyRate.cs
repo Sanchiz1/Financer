@@ -1,4 +1,6 @@
-﻿namespace Domain.Currencies
+﻿using Domain.Currencies;
+
+namespace Domain.Reports
 {
     public record CurrencyRate(
         Currency BaseCurrency,

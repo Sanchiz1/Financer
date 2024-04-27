@@ -5,8 +5,8 @@ namespace Domain.Transactions
 {
     public interface ITransactionRepository
     {
-        Task<Transaction?> GetById(Guid id, CancellationToken cancellationToken = default);
-        Task<IReadOnlyList<Transaction>> GetUserTransactionsOfFundAsync(User user, DateRange dateRange, Guid fundId, CancellationToken cancellationToken = default);
-        Task<IReadOnlyList<Transaction>> GetUserTransactionsAsync(User user, DateRange dateRange, CancellationToken cancellationToken = default);
+        Task<Transaction?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<Transaction>> GetUserTransactionsOfFundAsync(IUser user, DateRange dateRange, Guid fundId, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<Transaction>> GetUserTransactionsAsync(IUser user, DateRange dateRange, CancellationToken cancellationToken = default);
     }
 }

@@ -13,6 +13,8 @@ namespace Domain.Transactions
         public Description Description { get; private set; }
         public DateTime UtcNow { get; private set; }
 
+        private Transaction() { }
+
         internal Transaction(
             Guid id,
             Guid fundId,

@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Domain.Reports;
+using FluentValidation;
 using System.Reflection;
+using Application.Abstractions.Behaviors;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 public static class DependencyInjection
@@ -11,7 +14,15 @@ public static class DependencyInjection
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
+
+        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
+        services.AddTransient<CurrencyConversionService>();
+        services.AddTransient<ReportService>();
+
         return services;
     }
 }

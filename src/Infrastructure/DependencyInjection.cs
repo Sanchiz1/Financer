@@ -1,7 +1,4 @@
-﻿using Domain.Funds;
-using Domain.Categories;
-using Infrastructure.Data;
-using Domain.Transactions;
+﻿using Infrastructure.Data;
 using Infrastructure.Clock;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
@@ -11,6 +8,7 @@ using Application.Abstractions.Clock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Domain.Interfaces;
 
 namespace Infrastructure;
 public static class DependencyInjection

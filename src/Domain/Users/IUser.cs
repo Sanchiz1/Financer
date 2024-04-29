@@ -1,12 +1,10 @@
-﻿using Domain.Shared;
-using Domain.Currencies;
+﻿using Domain.ValueObjects;
 
-namespace Domain.Users
+namespace Domain.Users;
+
+public interface IUser
 {
-    public interface IUser
-    {
-        Name FirstName { get; }
-        Name LastName { get; }
-        Currency PrefferedCurrency { get; }
-    }
+    Name FirstName { get; }
+    Name LastName { get; }
+    Currency PrefferedCurrency { get; }
 }

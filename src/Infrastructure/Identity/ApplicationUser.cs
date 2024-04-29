@@ -1,5 +1,4 @@
 ﻿using Domain.Users;
-using Domain.Shared;
 using Domain.Currencies;
 using Microsoft.AspNetCore.Identity;
 

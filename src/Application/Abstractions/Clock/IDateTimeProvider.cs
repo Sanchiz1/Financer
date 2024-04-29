@@ -1,7 +1,6 @@
-﻿namespace Application.Abstractions.Clock
+﻿namespace Application.Abstractions.Clock;
+
+public interface IDateTimeProvider
 {
-    public interface IDateTimeProvider
-    {
-        DateTime UtcNow { get; }
-    }
+    DateTime UtcNow { get; }
 }

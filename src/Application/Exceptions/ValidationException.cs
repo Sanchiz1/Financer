@@ -1,7 +1,6 @@
-﻿namespace Application.Exceptions
+﻿namespace Application.Exceptions;
+
+public sealed class ValidationException(IEnumerable<ValidationError> errors) : Exception
 {
-    public sealed class ValidationException(IEnumerable<ValidationError> errors) : Exception
-    {
-        public IEnumerable<ValidationError> Errors { get; } = errors;
-    }
+    public IEnumerable<ValidationError> Errors { get; } = errors;
 }

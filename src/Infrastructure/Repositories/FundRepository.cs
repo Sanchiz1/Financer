@@ -1,11 +1,10 @@
-﻿using Domain.Funds;
-using Domain.Currencies;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
+using Domain.Entities.FundAggregate;
+using Domain.Interfaces;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories;
+
+internal sealed class FundRepository(ApplicationDbContext dbContext)
+    : Repository<Fund>(dbContext), IFundRepository
 {
-    internal sealed class FundRepository(ApplicationDbContext dbContext)
-        : Repository<Fund>(dbContext), IFundRepository
-    {
-    }
 }

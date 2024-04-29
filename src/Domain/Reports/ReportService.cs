@@ -1,48 +1,48 @@
 ﻿using Domain.Users;
-using Domain.Funds;
-using Domain.Currencies;
-using Domain.Categories;
-using Domain.Transactions;
-using Domain.Abstractions;
+using Domain.Entities.TransactionAggregate;
+using Domain.Entities.FundAggregate;
+using Domain.Errors;
+using Domain.Interfaces;
+using SharedKernel.Result;
+using Domain.ValueObjects;
 
-namespace Domain.Reports
+namespace Domain.Reports;
+
+public class ReportService(
+    CurrencyConversionService currencyConversionService,
+    ITransactionRepository transactionRepository,
+    IFundRepository fundRepository)
 {
-    public class ReportService(
-        CurrencyConversionService currencyConversionService,
-        ITransactionRepository transactionRepository,
-        IFundRepository fundRepository)
+    private readonly CurrencyConversionService _currencyConversionService = currencyConversionService;
+    private readonly ITransactionRepository _transactionRepository = transactionRepository;
+    private readonly IFundRepository _fundRepository = fundRepository;
+
+    public async Task<Result<Report>> CreateFundReport(IUser user, DateRange dateRange, Guid fundId, ICategoryRepository categoryRepository, CancellationToken cancellationToken = default)
     {
-        private readonly CurrencyConversionService _currencyConversionService = currencyConversionService;
-        private readonly ITransactionRepository _transactionRepository = transactionRepository;
-        private readonly IFundRepository _fundRepository = fundRepository;
+        IEnumerable<Transaction> transactions = await this._transactionRepository.GetUserTransactionsOfFundAsync(user, dateRange, fundId, cancellationToken);
 
-        public async Task<Result<Report>> CreateFundReport(IUser user, DateRange dateRange, Guid fundId, ICategoryRepository categoryRepository, CancellationToken cancellationToken = default)
+        Fund? fund = await this._fundRepository.GetByIdAsync(fundId, cancellationToken);
+        
+        if (fund is null)
         {
-            IEnumerable<Transaction> transactions = await this._transactionRepository.GetUserTransactionsOfFundAsync(user, dateRange, fundId, cancellationToken);
-
-            Fund? fund = await this._fundRepository.GetByIdAsync(fundId, cancellationToken);
-            
-            if (fund is null)
-            {
-                return Result.Failure<Report>(FundErrors.NotFound);
-            }
-
-            Currency prefferedCurrency = fund.Currency;
-
-            IEnumerable<Transaction> convertedTransactions = this._currencyConversionService.ConvertTransactions(transactions, prefferedCurrency);
-
-            return await Report.Create(convertedTransactions, dateRange, prefferedCurrency, categoryRepository);
+            return Result.Failure<Report>(FundErrors.NotFound);
         }
 
-        public async Task<Result<Report>> CreateUserTransactionsReport(IUser user, DateRange dateRange, ICategoryRepository categoryRepository, CancellationToken cancellationToken = default)
-        {
-            IEnumerable<Transaction> transactions = await this._transactionRepository.GetUserTransactionsAsync(user, dateRange, cancellationToken);
+        Currency prefferedCurrency = fund.Currency;
 
-            Currency prefferedCurrencty = user.PrefferedCurrency;
+        IEnumerable<Transaction> convertedTransactions = this._currencyConversionService.ConvertTransactions(transactions, prefferedCurrency);
 
-            IEnumerable<Transaction> convertedTransactions = this._currencyConversionService.ConvertTransactions(transactions, prefferedCurrencty);
+        return await Report.Create(convertedTransactions, dateRange, prefferedCurrency, categoryRepository);
+    }
 
-            return await Report.Create(convertedTransactions, dateRange, prefferedCurrencty, categoryRepository);
-        }
+    public async Task<Result<Report>> CreateUserTransactionsReport(IUser user, DateRange dateRange, ICategoryRepository categoryRepository, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<Transaction> transactions = await this._transactionRepository.GetUserTransactionsAsync(user, dateRange, cancellationToken);
+
+        Currency prefferedCurrencty = user.PrefferedCurrency;
+
+        IEnumerable<Transaction> convertedTransactions = this._currencyConversionService.ConvertTransactions(transactions, prefferedCurrencty);
+
+        return await Report.Create(convertedTransactions, dateRange, prefferedCurrencty, categoryRepository);
     }
 }

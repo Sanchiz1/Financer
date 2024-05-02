@@ -1,6 +1,8 @@
-﻿namespace Domain.AggregatesModel.ReportAggregate;
+﻿using Domain.Common;
 
-public record DateRange
+namespace Domain.ValueObjects;
+
+public class DateRange : ValueObject
 {
     private DateRange() { }
 
@@ -21,5 +23,11 @@ public record DateRange
             Start = start,
             End = end,
         };
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Start;
+        yield return End;
     }
 }

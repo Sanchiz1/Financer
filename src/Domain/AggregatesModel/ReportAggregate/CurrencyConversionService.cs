@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
 
-namespace Domain.Reports;
+namespace Domain.AggregatesModel.ReportAggregate;
 
 public class CurrencyConversionService
 {
@@ -9,10 +9,10 @@ public class CurrencyConversionService
 
     public CurrencyConversionService(IEnumerable<CurrencyRate> currencyRates)
     {
-        this._currencyRates = [];
+        _currencyRates = [];
         foreach (var rate in currencyRates)
         {
-            this._currencyRates[(rate.BaseCurrency, rate.RateCurrency)] = rate;
+            _currencyRates[(rate.BaseCurrency, rate.RateCurrency)] = rate;
         }
     }
 
@@ -33,10 +33,10 @@ public class CurrencyConversionService
                 yield return new Transaction(
                     transaction.Id,
                     transaction.FundId,
-                    transaction.CategoryId,
+                    transaction.Category,
                     new Money(convertedAmount, targetCurrency),
                     transaction.Description,
-                    transaction.UtcNow
+                    transaction.OperationDate
                 );
             }
         }
@@ -44,12 +44,13 @@ public class CurrencyConversionService
 
     public CurrencyRate GetCurrencyRate(Currency fromCurrency, Currency toCurrency)
     {
-        if (this._currencyRates.TryGetValue((fromCurrency, toCurrency), out CurrencyRate rate))
+        if (_currencyRates.TryGetValue((fromCurrency, toCurrency), out CurrencyRate rate))
         {
             return rate;
         }
         else
         {
+            // TODO: get rate from IExchangeRateProvider and cache
             throw new InvalidOperationException($"Курс обміну між {fromCurrency} та {toCurrency} не знайдено.");
         }
     }

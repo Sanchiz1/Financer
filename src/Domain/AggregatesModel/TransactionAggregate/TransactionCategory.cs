@@ -4,7 +4,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities.TransactionAggregate;
 
-public class TransactionCategory : BaseEntity<Guid>
+public class TransactionCategory : Entity<Guid>
 {
     public Guid UserId { get; set; }
     public Name Name { get; private set; }

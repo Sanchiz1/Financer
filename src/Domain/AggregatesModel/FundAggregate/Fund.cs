@@ -1,9 +1,10 @@
 ﻿using Domain.Abstractions;
+using Domain.Common;
 using Domain.ValueObjects;
 
 namespace Domain.Entities.FundAggregate;
 
-public sealed class Fund : BaseEntity<Guid>
+public sealed class Fund : Entity<Guid>, IAggregateRoot
 {
     public Guid UserId { get; private set; }
     public Currency Currency { get; private set; }

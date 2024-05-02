@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.FundAggregate;
 
-namespace Domain.Interfaces;
+namespace Domain.AggregatesModel.FundAggregate;
 
 public interface IFundRepository
 {

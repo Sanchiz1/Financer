@@ -1,8 +1,7 @@
-﻿using Domain.Users;
-using Domain.Reports;
-using Domain.Entities.TransactionAggregate;
+﻿using Domain.Entities.TransactionAggregate;
+using Domain.AggregatesModel.ReportAggregate;
 
-namespace Domain.Interfaces;
+namespace Domain.AggregatesModel.TransactionAggregate;
 
 public interface ITransactionRepository
 {

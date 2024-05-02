@@ -1,4 +1,4 @@
-﻿namespace Domain.Reports;
+﻿namespace Domain.AggregatesModel.ReportAggregate;
 
 public record DateRange
 {
@@ -7,7 +7,7 @@ public record DateRange
     public DateOnly Start { get; init; }
     public DateOnly End { get; init; }
 
-    public int LengthInDays => this.End.DayNumber - this.Start.DayNumber;
+    public int LengthInDays => End.DayNumber - Start.DayNumber;
 
     public static DateRange Create(DateOnly start, DateOnly end)
     {

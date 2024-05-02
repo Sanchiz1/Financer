@@ -1,8 +1,7 @@
-﻿using Domain.Users;
-using Domain.Reports;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
 using Domain.Entities.TransactionAggregate;
-using Domain.Interfaces;
+using Domain.AggregatesModel.TransactionAggregate;
+using Domain.AggregatesModel.ReportAggregate;
 
 namespace Infrastructure.Repositories;
 

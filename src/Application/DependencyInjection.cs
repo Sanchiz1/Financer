@@ -1,8 +1,8 @@
-﻿using Domain.Reports;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Reflection;
 using Application.Abstractions.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
+using Domain.AggregatesModel.ReportAggregate;
 
 namespace Application;
 public static class DependencyInjection

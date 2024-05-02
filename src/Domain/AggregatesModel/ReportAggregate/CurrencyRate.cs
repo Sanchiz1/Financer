@@ -1,6 +1,6 @@
 ﻿using Domain.ValueObjects;
 
-namespace Domain.Reports;
+namespace Domain.AggregatesModel.ReportAggregate;
 
 public record CurrencyRate(
     Currency BaseCurrency,

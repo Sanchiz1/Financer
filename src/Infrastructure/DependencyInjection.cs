@@ -8,7 +8,8 @@ using Application.Abstractions.Clock;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Domain.Interfaces;
+using Domain.AggregatesModel.TransactionAggregate;
+using Domain.AggregatesModel.FundAggregate;
 
 namespace Infrastructure;
 public static class DependencyInjection

@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Data;
 using Domain.Entities.FundAggregate;
-using Domain.Interfaces;
+using Domain.AggregatesModel.FundAggregate;
 
 namespace Infrastructure.Repositories;
 

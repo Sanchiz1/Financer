@@ -1,6 +1,6 @@
 ﻿namespace Domain.Abstractions;
 
-public abstract class BaseEntity<T>
+public abstract class Entity<T>
 {
     public T Id { get; init; }
 }

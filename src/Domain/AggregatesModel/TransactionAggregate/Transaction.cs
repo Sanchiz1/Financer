@@ -2,10 +2,11 @@
 using SharedKernel.Result;
 using Domain.Errors;
 using Domain.ValueObjects;
+using Domain.Common;
 
 namespace Domain.Entities.TransactionAggregate;
 
-public class Transaction : BaseEntity<Guid>
+public class Transaction : Entity<Guid>, IAggregateRoot
 {
     public Guid FundId { get; private set; }
     public Guid CategoryId { get; private set; }

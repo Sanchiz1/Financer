@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.TransactionAggregate;
 
-namespace Domain.Interfaces;
+namespace Domain.AggregatesModel.TransactionAggregate;
 
 public interface ICategoryRepository
 {

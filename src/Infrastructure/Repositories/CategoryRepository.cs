@@ -1,5 +1,5 @@
-﻿using Domain.Entities.TransactionAggregate;
-using Domain.Interfaces;
+﻿using Domain.AggregatesModel.TransactionAggregate;
+using Domain.Entities.TransactionAggregate;
 using Infrastructure.Data;
 
 namespace Infrastructure.Repositories;

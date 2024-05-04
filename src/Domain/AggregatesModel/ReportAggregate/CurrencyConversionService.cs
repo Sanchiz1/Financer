@@ -1,22 +1,13 @@
-﻿using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.ReportAggregate.ExchangeRateProvider;
+using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.ReportAggregate;
-
-public class CurrencyConversionService
+public class CurrencyConversionService(ExchangeRateProviderProxy providerProxy)
 {
-    private readonly Dictionary<(Currency, Currency), CurrencyRate> _currencyRates;
+    private readonly ExchangeRateProviderProxy _providerProxy = providerProxy;
 
-    public CurrencyConversionService(IEnumerable<CurrencyRate> currencyRates)
-    {
-        _currencyRates = [];
-        foreach (var rate in currencyRates)
-        {
-            _currencyRates[(rate.BaseCurrency, rate.RateCurrency)] = rate;
-        }
-    }
-
-    public IEnumerable<Transaction> ConvertTransactions(IEnumerable<Transaction> transactions, Currency targetCurrency)
+    public async IAsyncEnumerable<Transaction> ConvertTransactionsAsync(IEnumerable<Transaction> transactions, Currency targetCurrency)
     {
         foreach (var transaction in transactions)
         {
@@ -26,32 +17,23 @@ public class CurrencyConversionService
             }
             else
             {
-                CurrencyRate rate = GetCurrencyRate(transaction.Amount.Currency, targetCurrency);
-
-                decimal convertedAmount = transaction.Amount * rate.Rate;
-
-                yield return new Transaction(
-                    transaction.Id,
-                    transaction.FundId,
-                    transaction.Category,
-                    new Money(convertedAmount, targetCurrency),
-                    transaction.Description,
-                    transaction.OperationDate
-                );
+                yield return await ConvertTransactionAsync(transaction, targetCurrency);
             }
         }
     }
 
-    public CurrencyRate GetCurrencyRate(Currency fromCurrency, Currency toCurrency)
+    private async Task<Transaction> ConvertTransactionAsync(Transaction transaction, Currency targetCurrency)
     {
-        if (_currencyRates.TryGetValue((fromCurrency, toCurrency), out CurrencyRate rate))
-        {
-            return rate;
-        }
-        else
-        {
-            // TODO: get rate from IExchangeRateProvider and cache
-            throw new InvalidOperationException($"Курс обміну між {fromCurrency} та {toCurrency} не знайдено.");
-        }
+        var exchangeRate = await _providerProxy.GetExchangeRateAsync(transaction.Amount.Currency, targetCurrency);
+        var convertedAmount = transaction.Amount * exchangeRate;
+
+        return new Transaction(
+            transaction.Id,
+            transaction.FundId,
+            transaction.Category,
+            new Money(convertedAmount, targetCurrency),
+            transaction.Description,
+            transaction.OperationDate
+        );
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Data;
 using Domain.Entities.TransactionAggregate;
 using Domain.AggregatesModel.TransactionAggregate;
-using Domain.AggregatesModel.ReportAggregate;
+using Domain.ValueObjects;
 
 namespace Infrastructure.Repositories;
 

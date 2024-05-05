@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.TransactionAggregate;
-using Domain.AggregatesModel.ReportAggregate;
+using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.TransactionAggregate;
 

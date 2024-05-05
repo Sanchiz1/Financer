@@ -7,19 +7,21 @@ public class CurrencyConversionService(ExchangeRateProviderProxy providerProxy)
 {
     private readonly ExchangeRateProviderProxy _providerProxy = providerProxy;
 
-    public async IAsyncEnumerable<Transaction> ConvertTransactionsAsync(IEnumerable<Transaction> transactions, Currency targetCurrency)
+    public async Task<IEnumerable<Transaction>> ConvertTransactionsAsync(IEnumerable<Transaction> transactions, Currency targetCurrency)
     {
+        List<Transaction> convertedTransactions = [];
         foreach (var transaction in transactions)
         {
             if (transaction.Amount.Currency == targetCurrency)
             {
-                yield return transaction;
+                convertedTransactions.Add(transaction);
             }
             else
             {
-                yield return await ConvertTransactionAsync(transaction, targetCurrency);
+                convertedTransactions.Add(await ConvertTransactionAsync(transaction, targetCurrency));
             }
         }
+        return convertedTransactions;
     }
 
     private async Task<Transaction> ConvertTransactionAsync(Transaction transaction, Currency targetCurrency)

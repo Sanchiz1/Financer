@@ -1,8 +1,8 @@
-﻿using Domain.Currencies;
-using Infrastructure.Identity;
+﻿using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Domain.Entities.FundAggregate;
+using Domain.ValueObjects;
 
 namespace Infrastructure.Configurations;
 

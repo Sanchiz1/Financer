@@ -1,4 +1,5 @@
-﻿using Domain.Currencies;
+﻿using Application.Common.Interfaces;
+using Domain.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity;

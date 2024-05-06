@@ -1,9 +1,10 @@
-﻿using Infrastructure.Data;
+﻿using Domain.Abstractions;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-internal abstract class Repository<T>(ApplicationDbContext dbContext) where T : Entity
+internal abstract class Repository<T>(ApplicationDbContext dbContext) where T : Entity<Guid>
 {
     protected readonly ApplicationDbContext _dbContext = dbContext;
 

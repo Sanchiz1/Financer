@@ -9,7 +9,7 @@ internal sealed class TransactionRepository(ApplicationDbContext dbContext)
     : Repository<Transaction>(dbContext), ITransactionRepository
 {
     public Task<IReadOnlyList<Transaction>> GetUserTransactionsAsync(
-        IUser user,
+        Guid userId,
         DateRange dateRange,
         CancellationToken cancellationToken = default)
     {
@@ -17,8 +17,7 @@ internal sealed class TransactionRepository(ApplicationDbContext dbContext)
         throw new NotImplementedException();
     }
 
-    public Task<IReadOnlyList<Transaction>> GetUserTransactionsOfFundAsync(IUser user,
-        DateRange dateRange,
+    public Task<IReadOnlyList<Transaction>> GetUserTransactionsOfFundAsync(DateRange dateRange,
         Guid fundId,
         CancellationToken cancellationToken = default)
     {

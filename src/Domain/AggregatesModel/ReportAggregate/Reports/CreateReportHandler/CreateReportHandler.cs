@@ -1,12 +1,5 @@
-﻿using Domain.AggregatesModel.ReportAggregate.Reports;
-using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
-using Domain.Entities.TransactionAggregate;
+﻿using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
 public abstract class CreateReportHandler : ICreateReportHandler
@@ -20,15 +13,22 @@ public abstract class CreateReportHandler : ICreateReportHandler
         return nextHandler;
     }
 
-    public virtual Report CreateReport(IEnumerable<Transaction> transactions, Currency currency)
+    public virtual Report CreateReport(IEnumerable<Transaction> transactions)
     {
         if (_nextHandler != null)
         {
-            return _nextHandler.CreateReport(transactions, currency);
+            return _nextHandler.CreateReport(transactions);
         }
         else
         {
             throw new Exception();
         }
+    }
+
+    protected Currency GetCurrency(IEnumerable<Transaction> transactions)
+    {
+        var transaction = transactions.FirstOrDefault();
+
+        return transaction is null ? Currency.None : transaction.Amount.Currency;
     }
 }

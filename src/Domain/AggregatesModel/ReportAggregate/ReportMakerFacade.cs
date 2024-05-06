@@ -1,4 +1,5 @@
-﻿using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.ReportAggregate.Reports;
+using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
 using SharedKernel.Result;
 

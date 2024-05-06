@@ -11,7 +11,7 @@ public class YahooExchangeRateAdapter : IExchangeRateProvider
         _yahooCurrencyAPI = yahooCurrencyAPI;
     }
 
-    public async Task<decimal> GetExchangeRate(Currency fromCurrency, Currency toCurrency)
+    public async Task<decimal> GetExchangeRateAsync(Currency fromCurrency, Currency toCurrency)
     {
         return await _yahooCurrencyAPI.GetExchangeRateAsync(fromCurrency.Code, toCurrency.Code);
     }

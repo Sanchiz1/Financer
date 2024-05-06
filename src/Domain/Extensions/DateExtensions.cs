@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Extensions;
+﻿namespace Domain.Extensions;
 public static class DateExtensions
 {
     public static DateOnly GetStartOfMonth(this DateOnly date)

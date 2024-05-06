@@ -3,9 +3,9 @@ using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.ReportAggregate;
-public class CurrencyConversionService(ExchangeRateProviderProxy providerProxy)
+public class CurrencyConversionService(IExchangeRateProvider providerProxy)
 {
-    private readonly ExchangeRateProviderProxy _providerProxy = providerProxy;
+    private readonly IExchangeRateProvider _providerProxy = providerProxy;
 
     public async Task<IEnumerable<Transaction>> ConvertTransactionsAsync(IEnumerable<Transaction> transactions, Currency targetCurrency)
     {

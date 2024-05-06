@@ -1,8 +1,6 @@
-﻿using Domain.AggregatesModel.ReportAggregate.Reports;
-using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
+﻿using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
 using Domain.Entities.TransactionAggregate;
 using Domain.Extensions;
-using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
 public class CreateMonthlyReportHandler : CreateReportHandler
@@ -13,11 +11,13 @@ public class CreateMonthlyReportHandler : CreateReportHandler
         _reportBuilder = reportBuilder;
     }
 
-    public override Report CreateReport(IEnumerable<Transaction> transactions, Currency currency)
+    public override Report CreateReport(IEnumerable<Transaction> transactions)
     {
         var dateRange = transactions.GetDateRange();
         if (dateRange.LengthInDays > 31)
         {
+            var currency = base.GetCurrency(transactions);
+
             var report = _reportBuilder.WithCurrency(currency)
                 .WithMonthlySummary(transactions)
                 .Build();
@@ -26,7 +26,7 @@ public class CreateMonthlyReportHandler : CreateReportHandler
         }
         else
         {
-            return base.CreateReport(transactions, currency);
+            return base.CreateReport(transactions);
         }
     }
 }

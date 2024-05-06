@@ -17,6 +17,8 @@ public class Transaction : Entity<Guid>, IAggregateRoot
 
     public decimal RealAmount => Amount * (int)Category.OperationType;
 
+    public Transaction() { }
+
     internal Transaction(
         Guid id,
         Guid fundId, 

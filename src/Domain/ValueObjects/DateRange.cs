@@ -1,13 +1,30 @@
 ﻿using Domain.Common;
+using System.Xml.Serialization;
 
 namespace Domain.ValueObjects;
-
 public class DateRange : ValueObject
 {
     private DateRange() { }
 
-    public DateOnly Start { get; init; }
-    public DateOnly End { get; init; }
+    [XmlElement("StartDate")]
+    public string StartDate
+    {
+        get => Start.ToString("yyyy-MM-dd");
+        set => Start = DateOnly.Parse(value);
+    }
+
+    [XmlIgnore]
+    public DateOnly Start { get; private set; }
+
+    [XmlElement("EndDate")]
+    public string EndDate
+    {
+        get => End.ToString("yyyy-MM-dd");
+        set => End = DateOnly.Parse(value);
+    }
+
+    [XmlIgnore]
+    public DateOnly End { get; private set; }
 
     public int LengthInDays => End.DayNumber - Start.DayNumber;
 

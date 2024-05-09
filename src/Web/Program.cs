@@ -1,4 +1,5 @@
 using Application;
+using Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -18,9 +19,6 @@ internal class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        //builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-        builder.Services.AddProblemDetails();
 
         builder.Services.AddAuthentication(x =>
         {
@@ -68,7 +66,6 @@ internal class Program
             app.InitialiseDatabase();
         }
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -90,8 +87,6 @@ internal class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
-
-        app.UseExceptionHandler();
 
         app.MapControllers();
 

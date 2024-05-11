@@ -1,5 +1,4 @@
 using Application;
-using Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

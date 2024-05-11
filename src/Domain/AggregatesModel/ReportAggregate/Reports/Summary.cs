@@ -1,5 +1,4 @@
 ﻿using Domain.ValueObjects;
-using System.Runtime.CompilerServices;
 
 namespace Domain.AggregatesModel.ReportAggregate.Reports;
 public class Summary

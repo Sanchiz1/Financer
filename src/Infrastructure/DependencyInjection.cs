@@ -1,10 +1,9 @@
 ﻿using Application.Abstractions.Clock;
 using Application.Common.Interfaces;
-using Domain.AggregatesModel.TransactionAggregate;
 using Infrastructure.Clock;
 using Infrastructure.Data;
 using Infrastructure.Identity;
-using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +26,6 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString);
         });
 
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<ITransactionRepository, TransactionRepository>();
-
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services
@@ -37,7 +33,12 @@ public static class DependencyInjection
             {
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddSignInManager<SignInManager<ApplicationUser>>();
+
+
+        services.AddSingleton<TokenService>();
+        services.AddTransient<IdentityService>();
 
         return services;
     }

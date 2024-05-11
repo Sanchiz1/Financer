@@ -19,31 +19,27 @@ public class IdentityService
         _signInManager = signInManager;
         _tokenService = tokenService;
     }
-    public async Task<Result> RegisterAsync(string firstName, string lastName, string email, string password)
+    public async Task<Result> RegisterAsync(string firstName, string lastName, string email, Currency preferredCurrency, string password)
     {
         var user = new ApplicationUser
         {
             FirstName = new Name(firstName),
             LastName = new Name(lastName),
+            PrefferedCurrency = preferredCurrency,
             UserName = email,
             Email = email,
         };
 
         var result = await _userManager.CreateAsync(user, password);
-
-        if (!result.Succeeded)
-        {
-            return Result.Failure(result.Errors.First().ToResultError());
-        }
-
-        return Result.Success();
+        
+        return MapIdentityResult(result);
     }
 
     public async Task<Result<string>> LoginAsync(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
-        if (user == null) return Result.Failure<string>(IdentityErrors.UserNotFound);
+        if (user is null) return Result.Failure<string>(IdentityErrors.UserNotFound);
 
         await _signInManager.SignInAsync(user, true);
 
@@ -66,18 +62,39 @@ public class IdentityService
         return token;
     }
 
-    public async Task LogoutAsync()
-    {
-        await _signInManager.SignOutAsync();
-    }
-
-    public async Task DeleteUserAsync(Guid userId)
+    public async Task<Result> UpdatePreferredCurrency(Guid userId, Currency currency)
     {
         var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
-        if (user == null) return;
+        if (user is null) return Result.Failure(IdentityErrors.UserNotFound);
 
-        await _userManager.DeleteAsync(user);
+        user.PrefferedCurrency = currency;
+
+        var result = await _userManager.UpdateAsync(user);
+
+        return MapIdentityResult(result);
+    }
+
+
+    public async Task<Result> DeleteUserAsync(Guid userId)
+    {
+        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+        if (user is null) return Result.Failure<string>(IdentityErrors.UserNotFound);
+
+        var result = await _userManager.DeleteAsync(user);
+
+        return MapIdentityResult(result);
+    }
+
+    private static Result MapIdentityResult(IdentityResult result)
+    {
+        if (!result.Succeeded)
+        {
+            return Result.Failure(result.Errors.First().ToResultError());
+        }
+
+        return Result.Success();
     }
 }
 

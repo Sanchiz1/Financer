@@ -31,5 +31,20 @@ namespace Web.Controllers
 
             return BadRequest(result.Error);
         }
+
+        protected ActionResult HandleResult(Result result)
+        {
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.Error);
+        }
     }
 }

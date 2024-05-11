@@ -2,7 +2,7 @@
 using Domain.Extensions;
 using Domain.ValueObjects;
 
-namespace Domain.AggregatesModel.ReportAggregate.Reports.Builder;
+namespace Domain.AggregatesModel.ReportAggregate.ReportBuilder;
 public class ReportBuilder : IReportBuilder, IExpectsCurrency, IExpectsSummary
 {
     private Currency Currency { get; set; } = Currency.None;
@@ -10,7 +10,7 @@ public class ReportBuilder : IReportBuilder, IExpectsCurrency, IExpectsSummary
 
     public IExpectsSummary WithCurrency(Currency currency)
     {
-        this.Currency = currency;
+        Currency = currency;
 
         return this;
     }

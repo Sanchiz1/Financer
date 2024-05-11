@@ -1,7 +1,7 @@
 ﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
 
-namespace Domain.AggregatesModel.ReportAggregate.Reports.Builder;
+namespace Domain.AggregatesModel.ReportAggregate.ReportBuilder;
 public interface IExpectsCurrency
 {
     IExpectsSummary WithCurrency(Currency currency);

@@ -1,6 +1,5 @@
-﻿using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
-using Domain.AggregatesModel.ReportAggregate.Reports;
-using Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
+﻿using Domain.AggregatesModel.ReportAggregate.CreateReportHandler;
+using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
 using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
 using SharedKernel.Result;

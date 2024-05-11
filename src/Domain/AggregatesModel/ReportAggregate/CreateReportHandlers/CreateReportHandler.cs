@@ -1,7 +1,7 @@
 ﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
 
-namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
+namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandler;
 public abstract class CreateReportHandler : ICreateReportHandler
 {
     private ICreateReportHandler _nextHandler;

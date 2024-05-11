@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.Entities.TransactionAggregate;
-using Domain.Entities.FundAggregate;
+﻿using Domain.Entities.TransactionAggregate;
 using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
-
 internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
 {
     public void Configure(EntityTypeBuilder<Transaction> builder)
@@ -23,11 +21,6 @@ internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transa
             amountBuilder.Property(money => money.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
         });
-
-        builder.HasOne<Fund>()
-            .WithMany()
-            .HasForeignKey(transaction => transaction.FundId)
-            .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne<TransactionCategory>()
             .WithMany()

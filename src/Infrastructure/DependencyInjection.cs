@@ -1,15 +1,14 @@
-﻿using Infrastructure.Data;
+﻿using Application.Abstractions.Clock;
+using Application.Common.Interfaces;
+using Domain.AggregatesModel.TransactionAggregate;
 using Infrastructure.Clock;
+using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
-using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Application.Abstractions.Clock;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Domain.AggregatesModel.TransactionAggregate;
-using Domain.AggregatesModel.FundAggregate;
 
 namespace Infrastructure;
 public static class DependencyInjection
@@ -29,7 +28,6 @@ public static class DependencyInjection
         });
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<IFundRepository, FundRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

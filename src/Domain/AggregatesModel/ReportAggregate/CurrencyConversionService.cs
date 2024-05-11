@@ -31,7 +31,6 @@ public class CurrencyConversionService(IExchangeRateProvider providerProxy)
 
         return new Transaction(
             transaction.Id,
-            transaction.FundId,
             transaction.Category,
             new Money(convertedAmount, targetCurrency),
             transaction.Description,

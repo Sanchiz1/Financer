@@ -1,5 +1,5 @@
 ﻿using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
-using Domain.Entities.TransactionAggregate;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.Extensions;
 
 namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;

@@ -1,4 +1,4 @@
-﻿using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.TransactionAggregate;
 
 namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
 public interface ICreateReportHandler

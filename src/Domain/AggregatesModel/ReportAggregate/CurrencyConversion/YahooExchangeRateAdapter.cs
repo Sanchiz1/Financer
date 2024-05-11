@@ -1,12 +1,12 @@
 ﻿using Domain.ValueObjects;
 using Domain.Yahoo;
 
-namespace Domain.AggregatesModel.ReportAggregate.ExchangeRateProvider;
+namespace Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
 public class YahooExchangeRateAdapter : IExchangeRateProvider
 {
-    private readonly YahooCurrencyAPI _yahooCurrencyAPI;
+    private readonly IYahooCurrencyAPI _yahooCurrencyAPI;
 
-    public YahooExchangeRateAdapter(YahooCurrencyAPI yahooCurrencyAPI)
+    public YahooExchangeRateAdapter(IYahooCurrencyAPI yahooCurrencyAPI)
     {
         _yahooCurrencyAPI = yahooCurrencyAPI;
     }

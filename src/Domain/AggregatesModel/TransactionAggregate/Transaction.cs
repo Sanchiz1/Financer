@@ -1,10 +1,9 @@
-﻿using Domain.Abstractions;
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Errors;
 using Domain.ValueObjects;
 using SharedKernel.Result;
 
-namespace Domain.Entities.TransactionAggregate;
+namespace Domain.AggregatesModel.TransactionAggregate;
 public class Transaction : Entity<Guid>, IAggregateRoot
 {
     public Guid CategoryId { get; private set; }
@@ -24,7 +23,7 @@ public class Transaction : Entity<Guid>, IAggregateRoot
         Description description,
         DateTime operationDate)
     {
-        this.Id = id;
+        Id = id;
         CategoryId = category.Id;
         Category = category;
         Amount = amount;

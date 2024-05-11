@@ -2,9 +2,8 @@
 using System.Reflection;
 using Application.Abstractions.Behaviors;
 using Microsoft.Extensions.DependencyInjection;
-using Domain.AggregatesModel.ReportAggregate;
-using Domain.AggregatesModel.ReportAggregate.ExchangeRateProvider;
 using Domain.Yahoo;
+using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
 
 namespace Application;
 public static class DependencyInjection
@@ -22,9 +21,9 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
-        services.AddHttpClient<IYahooCurrencyAPI, YahooCurrencyAPI>();
+        services.AddHttpClient<IYahooCurrencyAPI, YahooCurrencyProxy>();
 
-        services.AddTransient<IExchangeRateProvider, ExchangeRateProviderProxy>();
+        services.AddTransient<IExchangeRateProvider, YahooExchangeRateAdapter>();
 
         services.AddTransient<CurrencyConversionService>();
 

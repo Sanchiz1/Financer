@@ -1,8 +1,10 @@
 ﻿using Application.Abstractions.Clock;
 using Application.Common.Interfaces;
+using Domain.AggregatesModel.TransactionAggregate.Repositories;
 using Infrastructure.Clock;
 using Infrastructure.Data;
 using Infrastructure.Identity;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -26,6 +28,12 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString);
         });
 
+
+        services.AddTransient<ITransactionAuthorizationService, TransactionAuthorizationService>();
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
+
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
         services
@@ -43,4 +51,3 @@ public static class DependencyInjection
         return services;
     }
 }
-

@@ -33,7 +33,6 @@ public class Transaction : Entity<Guid>, IAggregateRoot
     }
 
     public static Result<Transaction> Create(
-        Guid fundId,
         TransactionCategory category,
         Money amount,
         Description description,

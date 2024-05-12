@@ -1,11 +1,10 @@
-﻿using Infrastructure.Identity;
+﻿using Domain.Entities.TransactionAggregate;
+using Domain.ValueObjects;
+using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.Entities.TransactionAggregate;
-using Domain.ValueObjects;
 
 namespace Infrastructure.Configurations;
-
 internal sealed class CategoryConfiguration : IEntityTypeConfiguration<TransactionCategory>
 {
     public void Configure(EntityTypeBuilder<TransactionCategory> builder)
@@ -24,6 +23,6 @@ internal sealed class CategoryConfiguration : IEntityTypeConfiguration<Transacti
 
         builder.HasOne<ApplicationUser>()
             .WithMany()
-            .HasForeignKey(fund => fund.UserId);
+            .HasForeignKey(category => category.UserId);
     }
 }

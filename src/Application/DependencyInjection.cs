@@ -30,14 +30,29 @@ public static class DependencyInjection
 
         services.AddTransient<CurrencyConversionService>();
 
-        //?
         services.AddTransient<IExpectsCurrency, ReportBuilder>();
-        services.AddTransient<ICreateReportHandler, CreateMonthlyReportHandler>();
+
+        services.AddSingleton<CreateDailyReportHandler>();
+        services.AddSingleton<CreateWeeklyReportHandler>();
+        services.AddSingleton<ICreateReportHandler, CreateMonthlyReportHandler>();
+
+        services.SetCreateReportHandlersChain();
 
         services.AddKeyedTransient<IReportFileSaver, JsonReportFileSaver>("save-report-json");
         services.AddKeyedTransient<IReportFileSaver, XmlReportFileSaver>("save-report-xml");
 
 
         return services;
+    }
+
+    public static void SetCreateReportHandlersChain(this IServiceCollection services)
+    {
+        ICreateReportHandler createMonthlyReportHandler = services.BuildServiceProvider().GetService<ICreateReportHandler>()!;
+        ICreateReportHandler createWeeklyReportHandler = services.BuildServiceProvider().GetService<CreateWeeklyReportHandler>()!;
+        ICreateReportHandler createDailyReportHandler = services.BuildServiceProvider().GetService<CreateDailyReportHandler>()!;
+
+        createMonthlyReportHandler
+            .SetNext(createWeeklyReportHandler)
+            .SetNext(createDailyReportHandler);
     }
 }

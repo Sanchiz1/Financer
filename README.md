@@ -157,6 +157,87 @@ public class DailySummaryMapper : SummaryMapper
 
 ## Principles
 
+### 1. DRY
+
+Code was written by DRY principle, for example applicaiton has plenty of extension methods for working with dates.
+
+``` c#
+public static class DateExtensions
+{
+    public static DateOnly GetStartOfMonth(this DateOnly date)
+    {
+        return new DateOnly(date.Year, date.Month, 1);
+    }
+
+    public static DateOnly GetEndOfMonth(this DateOnly date)
+    {
+        return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+    }
+
+    public static DateOnly GetStartOfWeek(this DateOnly date)
+    {
+        int delta = DayOfWeek.Monday - date.DayOfWeek;
+        return date.AddDays(delta);
+    }
+
+    public static DateOnly GetEndOfWeek(this DateOnly date)
+    {
+        return date.GetStartOfWeek().AddDays(6);
+    }
+    
+    public static bool IsDate(this DateTime date, DateOnly otherDate)
+    {
+        return date.Year == otherDate.Year &&
+            date.Month == otherDate.Month &&
+            date.Day == otherDate.Day;
+    }
+}
+```
+
+### 2. DIP
+
+Dependency inversion principle was used, classes depend on interface **IExchangeRateProvider** - higher level module, instead of a concrete class. 
+
+``` c#
+public interface IExchangeRateProvider
+{
+    Task<decimal> GetExchangeRateAsync(Currency fromCurrency, Currency toCurrency);
+}
+
+```
+
+### 3. SRP
+
+SRP was used, because every class implements its own logic and responsible for small chunk of functionality. For example ReportBuilder was created to build reports so CreateReportHendlers would be responsible only for deciding, how to divide summaries and not some other functionality.
+
+### 4. Fail Fast
+
+After fetching rate, *YahooCurrencyApi* checks status code of response and throws error if it is not success:
+
+``` c#
+public async Task<decimal> GetExchangeRateAsync(string fromCurrencyCode, string toCurrencyCode)
+{
+    HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+    if (!response.IsSuccessStatusCode) throw new YahooException("Failed to fetch data");
+
+    string jsonString = await response.Content.ReadAsStringAsync();
+
+    var node = JsonNode.Parse(jsonString)!;
+
+    var rate = node["chart"]?["result"]?[0]?["meta"]?["regularMarketPrice"]?.ToString();
+
+    if (rate is null)
+    {
+        throw new YahooException("Failed to parse data");
+    }
+
+    return decimal.Parse(rate);
+}
+```
+### 5. YAGNI
+
+Only required functionality was implemented, application remains structure of actually needed modules with everything having a purpose.
 
 ## Refactoring Techniques
 

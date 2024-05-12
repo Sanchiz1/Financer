@@ -241,7 +241,53 @@ Only required functionality was implemented, application remains structure of ac
 
 ## Refactoring Techniques
 
+### 1. Form Template Method
 
+Builder methods for creating summaries had very similar code. In [commit #8ae81b8](https://github.com/Sanchiz1/Financer/commit/8ae81b86b162e87562afc17d7d8ebdaf0bae98fc) template method was formed to remove duplication. 
+Template method was described earlier.
+
+### 2. Intoduce foreign method
+
+Foreign method was introduced for getting date range the list of transactions.
+
+``` c#
+public static DateRange GetDateRange(this IEnumerable<Transaction> transactions)
+{
+    var minDate = transactions.Min(t => t.OperationDate);
+    var maxDate = transactions.Max(t => t.OperationDate);
+
+    return DateRange.Create(
+        DateOnly.FromDateTime(minDate),
+        DateOnly.FromDateTime(maxDate));
+}
+```
+
+### 3. Extract Method
+
+Writing *IdentityService* code for mapping *IdentityResult* was moved to new separate method.
+
+``` c#
+public async Task<Result> DeleteUserAsync(Guid userId)
+{
+    var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+    if (user is null) return Result.Failure<string>(IdentityErrors.UserNotFound);
+
+    var result = await _userManager.DeleteAsync(user);
+
+    return MapIdentityResult(result);
+}
+
+private static Result MapIdentityResult(IdentityResult result)
+{
+    if (!result.Succeeded)
+    {
+        return Result.Failure(result.Errors.First().ToResultError());
+    }
+
+    return Result.Success();
+}
+```
 
 # Illia Kotvitskyi
 

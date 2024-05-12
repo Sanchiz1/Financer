@@ -1,5 +1,4 @@
-﻿using Domain.AggregatesModel.ReportAggregate.Reports;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;
 public sealed class XmlReportFileSaver : IReportFileSaver

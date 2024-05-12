@@ -1,9 +1,11 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.UseCases.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Infrastructure;
 
 namespace Web.Controllers.Reports;
+[Authorize]
 public class ReportsController : BaseApiController
 {
     private string UserId => this.User.GetUserId().ToString();

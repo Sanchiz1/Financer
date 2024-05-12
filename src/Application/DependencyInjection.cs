@@ -1,8 +1,7 @@
-﻿using Application.Abstractions.Behaviors;
-using Domain.AggregatesModel.ReportAggregate;
-using Domain.AggregatesModel.ReportAggregate.ExchangeRateProvider;
-using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
-using Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
+using Application.Abstractions.Behaviors;
+using Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
+using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
+using Domain.AggregatesModel.ReportAggregate.ReportBuilder;
 using Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;
 using Domain.Yahoo;
 using FluentValidation;
@@ -25,12 +24,13 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
-        services.AddHttpClient<IYahooCurrencyAPI, YahooCurrencyAPI>();
+        services.AddHttpClient<IYahooCurrencyAPI, YahooCurrencyProxy>();
 
-        services.AddTransient<IExchangeRateProvider, ExchangeRateProviderProxy>();
+        services.AddTransient<IExchangeRateProvider, YahooExchangeRateAdapter>();
 
         services.AddTransient<CurrencyConversionService>();
 
+        //?
         services.AddTransient<IExpectsCurrency, ReportBuilder>();
         services.AddTransient<ICreateReportHandler, CreateMonthlyReportHandler>();
 

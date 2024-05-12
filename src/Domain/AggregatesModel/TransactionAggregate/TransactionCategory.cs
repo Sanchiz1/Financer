@@ -1,8 +1,7 @@
-﻿using Domain.Abstractions;
-using Domain.Enums;
+﻿using Domain.Common;
 using Domain.ValueObjects;
 
-namespace Domain.Entities.TransactionAggregate;
+namespace Domain.AggregatesModel.TransactionAggregate;
 
 public class TransactionCategory : Entity<Guid>
 {

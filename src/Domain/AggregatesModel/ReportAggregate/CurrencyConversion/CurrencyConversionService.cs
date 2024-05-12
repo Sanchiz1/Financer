@@ -1,8 +1,7 @@
-﻿using Domain.AggregatesModel.ReportAggregate.ExchangeRateProvider;
-using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
 
-namespace Domain.AggregatesModel.ReportAggregate;
+namespace Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
 public class CurrencyConversionService(IExchangeRateProvider providerProxy)
 {
     private readonly IExchangeRateProvider _providerProxy = providerProxy;

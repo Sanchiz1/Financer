@@ -1,5 +1,5 @@
-﻿using Domain.Abstractions;
-using Domain.AggregatesModel.TransactionAggregate.Repositories;
+﻿using Domain.AggregatesModel.TransactionAggregate.Repositories;
+using Domain.Common;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

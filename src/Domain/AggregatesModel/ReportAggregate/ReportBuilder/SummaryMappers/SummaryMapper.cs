@@ -1,11 +1,5 @@
 ﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.Extensions;
-using Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.AggregatesModel.ReportAggregate.ReportBuilder.SummaryMappers;
 public abstract class SummaryMapper

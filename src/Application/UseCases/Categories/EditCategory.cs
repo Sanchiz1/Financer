@@ -2,8 +2,8 @@
 using Application.Common.Dtos;
 using Application.Common.Interfaces;
 using AutoMapper;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
-using Domain.Entities.TransactionAggregate;
 using Domain.Errors;
 using FluentValidation;
 using MediatR;

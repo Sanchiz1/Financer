@@ -1,6 +1,4 @@
-﻿using Domain.Enums;
-
-namespace Application.Common.Dtos;
+﻿namespace Application.Common.Dtos;
 public sealed record TransactionCategoryDto(
     Guid Id,
     Guid UserId,

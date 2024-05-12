@@ -1,4 +1,4 @@
-﻿using Domain.Abstractions;
+﻿using Domain.Common;
 
 namespace Domain.AggregatesModel.TransactionAggregate.Repositories;
 public interface IRepository<T> where T : Entity<Guid>

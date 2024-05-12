@@ -1,6 +1,6 @@
 ﻿using Application.Common.Dtos;
 using AutoMapper;
-using Domain.Entities.TransactionAggregate;
+using Domain.AggregatesModel.TransactionAggregate;
 
 namespace Application.Common.Mappings;
 public class MappingProfile : Profile

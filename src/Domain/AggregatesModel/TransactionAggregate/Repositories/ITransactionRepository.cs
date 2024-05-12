@@ -1,5 +1,4 @@
-﻿using Domain.Entities.TransactionAggregate;
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.TransactionAggregate.Repositories;
 public interface ITransactionRepository : IRepository<Transaction>

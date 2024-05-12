@@ -1,8 +1,8 @@
 ﻿using Application.Abstractions.Clock;
 using Application.Abstractions.Messaging;
 using Application.Common.Dtos;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
-using Domain.Entities.TransactionAggregate;
 using Domain.Errors;
 using Domain.ValueObjects;
 using FluentValidation;

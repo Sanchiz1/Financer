@@ -1,10 +1,8 @@
-﻿using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
 using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.ValueObjects;
-using Domain.AggregatesModel.TransactionAggregate;
 
 namespace Infrastructure.Configurations;
 internal sealed class CategoryConfiguration : IEntityTypeConfiguration<TransactionCategory>

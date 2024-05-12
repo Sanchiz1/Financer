@@ -1,8 +1,7 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.Common.Dtos;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
-using Domain.Entities.TransactionAggregate;
-using Domain.Enums;
 using Domain.ValueObjects;
 using FluentValidation;
 using MediatR;

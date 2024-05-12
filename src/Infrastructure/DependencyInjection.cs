@@ -6,7 +6,6 @@ using Infrastructure.Common;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +31,7 @@ public static class DependencyInjection
         services.AddTransient<ITransactionAuthorizationService, TransactionAuthorizationService>();
         services.AddTransient<ICategoryAuthorizationService, CategoryAuthorizationService>();
 
+
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
 
@@ -42,13 +42,9 @@ public static class DependencyInjection
             {
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddSignInManager<SignInManager<ApplicationUser>>();
-
-
-        services.AddSingleton<TokenService>();
-        services.AddTransient<IdentityService>();
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;
     }
 }
+

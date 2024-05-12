@@ -1,5 +1,4 @@
-﻿using Domain.AggregatesModel.ReportAggregate.Reports;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;

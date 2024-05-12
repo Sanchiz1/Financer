@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums;
+﻿namespace Domain.AggregatesModel.TransactionAggregate;
 
 public enum OperationType
 {

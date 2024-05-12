@@ -1,8 +1,8 @@
-﻿using Domain.AggregatesModel.ReportAggregate.Reports.Builder;
-using Domain.Entities.TransactionAggregate;
+﻿using Domain.AggregatesModel.ReportAggregate.ReportBuilder;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.Extensions;
 
-namespace Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
+namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 public class CreateMonthlyReportHandler : CreateReportHandler
 {
     public IExpectsCurrency _reportBuilder;
@@ -16,7 +16,7 @@ public class CreateMonthlyReportHandler : CreateReportHandler
         var dateRange = transactions.GetDateRange();
         if (dateRange.LengthInDays > 31)
         {
-            var currency = base.GetCurrency(transactions);
+            var currency = GetCurrency(transactions);
 
             var report = _reportBuilder.WithCurrency(currency)
                 .WithMonthlySummary(transactions)

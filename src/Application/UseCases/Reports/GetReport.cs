@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.AggregatesModel.ReportAggregate.Reports;
-using Domain.AggregatesModel.ReportAggregate.Reports.CreateReportHandler;
+using Domain.AggregatesModel.ReportAggregate;
+using Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
 using Domain.ValueObjects;
 using SharedKernel.Result;

@@ -25,7 +25,8 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
-        services.AddHttpClient<IYahooCurrencyAPI, YahooCurrencyProxy>();
+        services.AddHttpClient<YahooCurrencyAPI>();
+        services.AddTransient<IYahooCurrencyAPI, YahooCurrencyProxy>();
 
         services.AddTransient<IExchangeRateProvider, YahooExchangeRateAdapter>();
 

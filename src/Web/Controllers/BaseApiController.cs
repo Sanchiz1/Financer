@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Result;
+using Web.Infrastructure;
 
 namespace Web.Controllers;
 [ApiController]
@@ -10,6 +11,8 @@ public class BaseApiController : ControllerBase
     private IMediator _mediator;
 
     protected IMediator Mediator => this._mediator ??= this.HttpContext.RequestServices.GetService<IMediator>()!;
+
+    protected string UserId => this.User.GetUserId().ToString();
 
     protected ActionResult HandleResult<T>(Result<T> result)
     {

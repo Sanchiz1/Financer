@@ -2,7 +2,6 @@
 using Domain.ValueObjects;
 
 namespace Domain.AggregatesModel.TransactionAggregate;
-
 public class TransactionCategory : Entity<Guid>
 {
     public Guid UserId { get; set; }

@@ -2,16 +2,15 @@
 using Application.UseCases.Transactions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Web.Infrastructure;
 
-namespace Web.Controllers.Transactions;
+namespace Web.Controllers;
 [Authorize]
 public class TransactionsController : BaseApiController
 {
-    private string UserId => this.User.GetUserId().ToString();
-
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetTransaction(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTransaction(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
         var query = new GetTransactionByIdQuery(this.UserId, id);
         return HandleResult(await this.Mediator.Send(query, cancellationToken));
@@ -39,8 +38,8 @@ public class TransactionsController : BaseApiController
         [FromBody] TransactionDto transaction,
         CancellationToken cancellationToken)
     {
-        var query = new CreateTransactionCommand(transaction);
-        return HandleResult(await this.Mediator.Send(query, cancellationToken));
+        var command = new CreateTransactionCommand(transaction);
+        return HandleResult(await this.Mediator.Send(command, cancellationToken));
     }
 
     [HttpPut("{id}")]
@@ -50,14 +49,16 @@ public class TransactionsController : BaseApiController
         CancellationToken cancellationToken)
     {
         transactionDto = transactionDto with { Id = id };
-        var query = new EditTransactionCommand(transactionDto);
-        return HandleResult(await this.Mediator.Send(query, cancellationToken));
+        var command = new EditTransactionCommand(this.UserId, transactionDto);
+        return HandleResult(await this.Mediator.Send(command, cancellationToken));
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTransaction(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteTransaction(
+        Guid id, 
+        CancellationToken cancellationToken)
     {
-        var query = new DeleteTransactionCommand(this.UserId, id);
-        return HandleResult(await this.Mediator.Send(query, cancellationToken));
+        var command = new DeleteTransactionCommand(this.UserId, id);
+        return HandleResult(await this.Mediator.Send(command, cancellationToken));
     }
 }

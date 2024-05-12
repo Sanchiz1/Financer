@@ -12,12 +12,22 @@ using SharedKernel.Result;
 namespace Application.UseCases.Transactions;
 public sealed record CreateTransactionCommand(TransactionDto Transaction) : ICommand<Unit>;
 
-internal class ReserveBookingCommandValidator : AbstractValidator<CreateTransactionCommand>
+internal class CreateTransactionCommandValidator : AbstractValidator<CreateTransactionCommand>
 {
-    public ReserveBookingCommandValidator()
+    public CreateTransactionCommandValidator()
     {
-        RuleFor(t => t.Transaction.MoneyAmount).GreaterThan(.1m);
-        RuleFor(t => t.Transaction.MoneyCurrency).NotEmpty();
+        RuleFor(cmd => cmd.Transaction)
+            .NotNull().WithMessage("Transaction details must not be null.");
+
+        RuleFor(cmd => cmd.Transaction.MoneyAmount)
+            .GreaterThan(0).WithMessage("Money amount must be greater than zero.");
+
+        RuleFor(cmd => cmd.Transaction.MoneyCurrency)
+            .NotEmpty().WithMessage("Money currency must not be empty.")
+            .Length(3).WithMessage("Money currency must be 3 characters long.");
+
+        RuleFor(cmd => cmd.Transaction.CategoryId)
+            .NotNull().WithMessage("Transaction category id must not be null.");
     }
 }
 

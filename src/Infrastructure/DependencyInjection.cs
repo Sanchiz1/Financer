@@ -2,6 +2,7 @@
 using Application.Common.Interfaces;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
 using Infrastructure.Clock;
+using Infrastructure.Common;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
@@ -28,8 +29,8 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString);
         });
 
-
         services.AddTransient<ITransactionAuthorizationService, TransactionAuthorizationService>();
+        services.AddTransient<ICategoryAuthorizationService, CategoryAuthorizationService>();
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();

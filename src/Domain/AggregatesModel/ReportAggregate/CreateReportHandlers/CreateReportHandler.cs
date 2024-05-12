@@ -21,7 +21,7 @@ public abstract class CreateReportHandler : ICreateReportHandler
         }
         else
         {
-            throw new Exception();
+            throw new Exception("Suitable handler was not implemented");
         }
     }
 

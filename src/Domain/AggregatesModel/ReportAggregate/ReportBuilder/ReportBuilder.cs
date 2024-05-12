@@ -1,4 +1,5 @@
-﻿using Domain.AggregatesModel.TransactionAggregate;
+﻿using Domain.AggregatesModel.ReportAggregate.ReportBuilder.SummaryMappers;
+using Domain.AggregatesModel.TransactionAggregate;
 using Domain.Extensions;
 using Domain.ValueObjects;
 
@@ -30,82 +31,27 @@ public class ReportBuilder : IReportBuilder, IExpectsCurrency, IExpectsSummary
 
     public IReportBuilder WithDailySummary(IEnumerable<Transaction> transactions)
     {
-        var dateRange = transactions.GetDateRange();
+        SummaryMapper summaryMapper = new DailySummaryMapper();
 
-        var currentDate = dateRange.Start;
-
-        while (currentDate <= dateRange.End)
-        {
-            decimal totalAmount = transactions.Where(t =>
-            t.OperationDate.IsDate(currentDate))
-                .Sum(o => o.RealAmount);
-
-            var summary = new Summary(totalAmount,
-                DateRange.Create(currentDate, currentDate)
-                );
-
-            Summaries.Add(summary);
-
-            currentDate = currentDate.AddDays(1);
-        }
+        Summaries = summaryMapper.MapToSummaries(transactions).ToList();
 
         return this;
     }
 
     public IReportBuilder WithWeeklySummary(IEnumerable<Transaction> transactions)
     {
-        var dateRange = transactions.GetDateRange();
+        SummaryMapper summaryMapper = new WeeklySummaryMapper();
 
-        var currentDate = dateRange.Start.GetStartOfWeek();
-
-        while (currentDate <= dateRange.End)
-        {
-            var startOfWeekDateTime = currentDate.GetStartOfWeek().ToDateTime(TimeOnly.MinValue);
-            var endOfWeekDateTime = currentDate.GetEndOfWeek().ToDateTime(TimeOnly.MaxValue);
-
-            decimal totalAmount = transactions.Where(t =>
-            t.OperationDate.Date >= startOfWeekDateTime &&
-            t.OperationDate.Date <= endOfWeekDateTime)
-                .Sum(o => o.RealAmount);
-
-            var summary = new Summary(totalAmount,
-                DateRange.Create(currentDate.GetStartOfWeek(), currentDate.GetEndOfWeek())
-                );
-
-            Summaries.Add(summary);
-
-            currentDate = currentDate.AddDays(7);
-        }
+        Summaries = summaryMapper.MapToSummaries(transactions).ToList();
 
         return this;
     }
 
     public IReportBuilder WithMonthlySummary(IEnumerable<Transaction> transactions)
     {
-        Summaries = [];
+        SummaryMapper summaryMapper = new MonthlySummaryMapper();
 
-        var dateRange = transactions.GetDateRange();
-
-        var currentDate = dateRange.Start.GetStartOfMonth();
-
-        while (currentDate <= dateRange.End)
-        {
-            var startOfMonthDateTime = currentDate.GetStartOfMonth().ToDateTime(TimeOnly.MinValue);
-            var endOfMonthDateTime = currentDate.GetEndOfMonth().ToDateTime(TimeOnly.MaxValue);
-
-            decimal totalAmount = transactions.Where(t =>
-            t.OperationDate.Date >= startOfMonthDateTime &&
-            t.OperationDate.Date <= endOfMonthDateTime)
-                .Sum(o => o.RealAmount);
-
-            var summary = new Summary(totalAmount,
-                DateRange.Create(currentDate.GetStartOfMonth(), currentDate.GetEndOfMonth())
-                );
-
-            Summaries.Add(summary);
-
-            currentDate = currentDate.AddMonths(1);
-        }
+        Summaries = summaryMapper.MapToSummaries(transactions).ToList();
 
         return this;
     }

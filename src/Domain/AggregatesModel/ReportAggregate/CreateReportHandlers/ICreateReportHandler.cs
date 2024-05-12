@@ -1,6 +1,6 @@
 ﻿using Domain.AggregatesModel.TransactionAggregate;
 
-namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandler;
+namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 public interface ICreateReportHandler
 {
     Report CreateReport(IEnumerable<Transaction> transactions);

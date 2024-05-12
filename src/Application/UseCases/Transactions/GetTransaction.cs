@@ -4,7 +4,6 @@ using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.AggregatesModel.TransactionAggregate.Repositories;
 using Domain.Errors;
-using MediatR;
 using SharedKernel.Result;
 
 namespace Application.UseCases.Transactions;

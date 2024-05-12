@@ -1,9 +1,12 @@
-﻿using FluentValidation;
-using System.Reflection;
 using Application.Abstractions.Behaviors;
-using Microsoft.Extensions.DependencyInjection;
-using Domain.Yahoo;
+using Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
+using Domain.AggregatesModel.ReportAggregate.ReportBuilder;
+using Domain.AggregatesModel.ReportAggregate.SaveReportStrategy;
+using Domain.Yahoo;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Application;
 public static class DependencyInjection
@@ -26,6 +29,14 @@ public static class DependencyInjection
         services.AddTransient<IExchangeRateProvider, YahooExchangeRateAdapter>();
 
         services.AddTransient<CurrencyConversionService>();
+
+        //?
+        services.AddTransient<IExpectsCurrency, ReportBuilder>();
+        services.AddTransient<ICreateReportHandler, CreateMonthlyReportHandler>();
+
+        services.AddKeyedTransient<IReportFileSaver, JsonReportFileSaver>("save-report-json");
+        services.AddKeyedTransient<IReportFileSaver, XmlReportFileSaver>("save-report-xml");
+
 
         return services;
     }

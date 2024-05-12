@@ -1,8 +1,6 @@
 ﻿using Domain.ValueObjects;
 using Infrastructure.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Web.Infrastructure;
 using Web.Models.Identity;
 

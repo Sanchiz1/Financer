@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Dtos\" />
-    <Folder Include="UseCases\Reports\" />
   </ItemGroup>
 
   <ItemGroup>

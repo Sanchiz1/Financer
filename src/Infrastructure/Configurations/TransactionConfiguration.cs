@@ -18,11 +18,14 @@ internal sealed class TransactionConfiguration : IEntityTypeConfiguration<Transa
 
         builder.OwnsOne(transaction => transaction.Amount, amountBuilder =>
         {
+            amountBuilder.Property(money => money.Amount)
+                .HasColumnType("DECIMAL(18,2)");
+
             amountBuilder.Property(money => money.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
         });
 
-        builder.HasOne<TransactionCategory>()
+        builder.HasOne(transaction => transaction.Category)
             .WithMany()
             .HasForeignKey(transaction => transaction.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);

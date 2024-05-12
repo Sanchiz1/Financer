@@ -2,7 +2,7 @@
 using Domain.AggregatesModel.TransactionAggregate;
 using Domain.Extensions;
 
-namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandler;
+namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 public class CreateMonthlyReportHandler : CreateReportHandler
 {
     public IExpectsCurrency _reportBuilder;

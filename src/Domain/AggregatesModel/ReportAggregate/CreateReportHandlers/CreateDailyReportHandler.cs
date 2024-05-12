@@ -1,7 +1,7 @@
 ﻿using Domain.AggregatesModel.ReportAggregate.ReportBuilder;
 using Domain.AggregatesModel.TransactionAggregate;
 
-namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandler;
+namespace Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 public class CreateDailyReportHandler : CreateReportHandler
 {
     public IExpectsCurrency _reportBuilder;

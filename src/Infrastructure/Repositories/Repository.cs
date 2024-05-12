@@ -15,6 +15,11 @@ internal abstract class Repository<T>(ApplicationDbContext dbContext) : IReposit
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
 
+    public virtual async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await this.DbContext.Set<T>().ToListAsync(cancellationToken);
+    }
+
     public virtual async Task Add(T entity, CancellationToken cancellationToken = default)
     {
         this.DbContext.Add(entity);
@@ -32,4 +37,5 @@ internal abstract class Repository<T>(ApplicationDbContext dbContext) : IReposit
         DbContext.Remove(entity);
         await this.DbContext.SaveChangesAsync(cancellationToken);
     }
+
 }

@@ -1,7 +1,6 @@
 ﻿using SharedKernel.Result;
 
 namespace Domain.Errors;
-
 public static class CategoryErrors
 {
     public static Error NotFound = new(
@@ -15,4 +14,8 @@ public static class CategoryErrors
     public static Error InvalidName = new(
         "Category.InvalidName",
         "The name provided for the category is invalid");
+
+    public static Error InvalidUser = new(
+        "Transaction.InvalidUser",
+        "The provided user credentials are invalid");
 }

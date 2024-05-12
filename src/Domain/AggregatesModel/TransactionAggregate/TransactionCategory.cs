@@ -3,7 +3,6 @@ using Domain.Enums;
 using Domain.ValueObjects;
 
 namespace Domain.Entities.TransactionAggregate;
-
 public class TransactionCategory : Entity<Guid>
 {
     public Guid UserId { get; set; }

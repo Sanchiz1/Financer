@@ -1,7 +1,7 @@
 ﻿using Domain.Entities.TransactionAggregate;
 
 namespace Domain.AggregatesModel.TransactionAggregate.Repositories;
-public interface ICategoryRepository
+public interface ICategoryRepository : IRepository<TransactionCategory>
 {
     Task<TransactionCategory?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

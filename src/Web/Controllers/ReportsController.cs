@@ -3,11 +3,9 @@ using Application.UseCases.Reports;
 using Microsoft.AspNetCore.Mvc;
 using Web.Infrastructure;
 
-namespace Web.Controllers.Reports;
+namespace Web.Controllers;
 public class ReportsController : BaseApiController
 {
-    private string UserId => this.User.GetUserId().ToString();
-
     [HttpGet]
     public async Task<IActionResult> GenerateReport(
         DateOnly startDate,

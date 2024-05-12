@@ -11,7 +11,7 @@ namespace Domain.AggregatesModel.ReportAggregate
         private readonly CurrencyConversionService _currencyConversionService = currencyConversionService;
         private readonly ICreateReportHandler _createReportHandler = createReportHandler;
 
-        public async Task<Result<Report>> CreateReport(Currency preferredCurrency, IEnumerable<Transaction> transactions, DateRange dateRange)
+        public async Task<Report> CreateReport(Currency preferredCurrency, IEnumerable<Transaction> transactions)
         {
             var convertedTransactions = await this._currencyConversionService.ConvertTransactionsAsync(transactions, preferredCurrency);
 

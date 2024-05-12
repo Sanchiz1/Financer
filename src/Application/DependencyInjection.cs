@@ -1,4 +1,5 @@
 using Application.Abstractions.Behaviors;
+using Domain.AggregatesModel.ReportAggregate;
 using Domain.AggregatesModel.ReportAggregate.CreateReportHandlers;
 using Domain.AggregatesModel.ReportAggregate.CurrencyConversion;
 using Domain.AggregatesModel.ReportAggregate.ReportBuilder;
@@ -35,6 +36,9 @@ public static class DependencyInjection
         services.AddSingleton<CreateDailyReportHandler>();
         services.AddSingleton<CreateWeeklyReportHandler>();
         services.AddSingleton<ICreateReportHandler, CreateMonthlyReportHandler>();
+
+        services.AddSingleton<CurrencyConversionService>();
+        services.AddSingleton<ReportMakerFacade>();
 
         services.SetCreateReportHandlersChain();
 

@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.UseCases.Reports;
+using Domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,31 +10,34 @@ public class ReportsController : BaseApiController
 {
     [HttpGet]
     public async Task<IActionResult> GenerateReport(
+        string currencyCode,
         DateOnly startDate,
         DateOnly endDate,
         CancellationToken cancellationToken)
     {
-        var query = new GetReportQuery(this.UserId, startDate, endDate);
+        var query = new GetReportQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
         return HandleResult(await this.Mediator.Send(query, cancellationToken));
     }
 
     [HttpPost("save/json")]
     public async Task<IActionResult> SaveReportAsJson(
+        string currencyCode,
         DateOnly startDate,
         DateOnly endDate,
         CancellationToken cancellationToken)
     {
-        var query = new SaveReportJsonQuery(this.UserId, startDate, endDate);
+        var query = new SaveReportJsonQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
         return await SaveReport(query, cancellationToken);
     }
 
     [HttpPost("save/xml")]
     public async Task<IActionResult> SaveReportAsXml(
+        string currencyCode,
         DateOnly startDate,
         DateOnly endDate,
         CancellationToken cancellationToken)
     {
-        var query = new SaveReportXmlQuery(this.UserId, startDate, endDate);
+        var query = new SaveReportXmlQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
         return await SaveReport(query, cancellationToken);
     }
 

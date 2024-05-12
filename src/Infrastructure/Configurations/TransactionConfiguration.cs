@@ -1,5 +1,6 @@
 ﻿using Domain.AggregatesModel.TransactionAggregate;
 using Domain.ValueObjects;
+using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

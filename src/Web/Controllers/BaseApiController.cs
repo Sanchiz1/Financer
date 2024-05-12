@@ -10,7 +10,7 @@ namespace Web.Controllers
     {
         private IMediator _mediator;
 
-        protected IMediator Mediator => this._mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        protected IMediator Mediator => this._mediator ??= this.HttpContext.RequestServices.GetService<IMediator>()!;
 
         protected ActionResult HandleResult<T>(Result<T> result)
         {

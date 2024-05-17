@@ -5,14 +5,11 @@ using Domain.ValueObjects;
 namespace Domain.AggregatesModel.ReportAggregate.ReportBuilder.SummaryMappers;
 public class MonthlySummaryMapper : SummaryMapper
 {
-    protected override DateOnly GetStartDate(DateOnly date)
-    {
-        return date.GetStartOfMonth();
-    }
-    protected override DateOnly NextDate(DateOnly currentDate)
-    {
-        return currentDate.AddMonths(1);
-    }
+    protected override DateOnly GetStartDate(DateOnly date) =>
+        date.GetStartOfMonth();
+
+    protected override DateOnly NextDate(DateOnly currentDate) =>
+        currentDate.AddMonths(1);
 
     protected override decimal GetTotalAmount(DateOnly currentDate, IEnumerable<Transaction> transactions)
     {
@@ -25,11 +22,8 @@ public class MonthlySummaryMapper : SummaryMapper
             .Sum(o => o.RealAmount);
     }
 
-    protected override Summary CreateSummary(DateOnly currentDate, decimal amount)
-    {
-        return new Summary(amount,
-                DateRange.Create(currentDate.GetStartOfMonth(),
-                currentDate.GetEndOfMonth())
-                );
-    }
+    protected override Summary CreateSummary(DateOnly currentDate, decimal amount) =>
+        new Summary(
+            amount,
+            DateRange.Create(currentDate.GetStartOfMonth(), currentDate.GetEndOfMonth()));
 }

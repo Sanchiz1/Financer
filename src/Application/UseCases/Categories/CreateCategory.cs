@@ -8,16 +8,12 @@ using MediatR;
 using SharedKernel.Result;
 
 namespace Application.UseCases.Categories;
-public sealed record CreateCategoryCommand(TransactionCategoryDto Category) : ICommand<Unit>;
+public sealed record CreateCategoryCommand(string UserId, TransactionCategoryDto Category) : ICommand<Unit>;
 
 internal sealed class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
     public CreateCategoryCommandValidator()
     {
-        RuleFor(cmd => cmd.Category.UserId)
-            .NotEmpty()
-            .WithMessage("User Id must not be empty.");
-        
         RuleFor(cmd => cmd.Category.Name)
             .NotEmpty()
             .WithMessage("Name must not be empty.");
@@ -36,12 +32,12 @@ internal sealed class CreateCategoryCommandHandler(ICategoryRepository categoryR
     public async Task<Result<Unit>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = new TransactionCategory(
-            request.Category.UserId,
+            Guid.Parse(request.UserId),
             new Name(request.Category.Name),
             new Description(request.Category.Description), 
             (OperationType)request.Category.OperationType);
 
-        await this._categoryRepository.Add(category);
+        await this._categoryRepository.Add(category, cancellationToken);
 
         return Result.Success(Unit.Value);
     }

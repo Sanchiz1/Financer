@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
+using Application.Common.Dtos;
 using Application.UseCases.Reports;
 using Domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
@@ -10,34 +11,43 @@ public class ReportsController : BaseApiController
 {
     [HttpGet]
     public async Task<IActionResult> GenerateReport(
-        string currencyCode,
-        DateOnly startDate,
-        DateOnly endDate,
+        GenerateReportDto generateReportDto,
         CancellationToken cancellationToken)
     {
-        var query = new GetReportQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
+        var query = new GetReportQuery(
+            Currency.FromCode(generateReportDto.Currency), 
+            this.UserId, 
+            generateReportDto.DateRange.Start,
+            generateReportDto.DateRange.End);
+
         return HandleResult(await this.Mediator.Send(query, cancellationToken));
     }
 
     [HttpPost("save/json")]
     public async Task<IActionResult> SaveReportAsJson(
-        string currencyCode,
-        DateOnly startDate,
-        DateOnly endDate,
+        GenerateReportDto generateReportDto,
         CancellationToken cancellationToken)
     {
-        var query = new SaveReportJsonQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
+        var query = new SaveReportJsonQuery(
+            Currency.FromCode(generateReportDto.Currency), 
+            this.UserId, 
+            generateReportDto.DateRange.Start, 
+            generateReportDto.DateRange.End);
+
         return await SaveReport(query, cancellationToken);
     }
 
     [HttpPost("save/xml")]
     public async Task<IActionResult> SaveReportAsXml(
-        string currencyCode,
-        DateOnly startDate,
-        DateOnly endDate,
+        GenerateReportDto generateReportDto,
         CancellationToken cancellationToken)
     {
-        var query = new SaveReportXmlQuery(Currency.FromCode(currencyCode), this.UserId, startDate, endDate);
+        var query = new SaveReportXmlQuery(
+            Currency.FromCode(generateReportDto.Currency),
+            this.UserId,
+            generateReportDto.DateRange.Start,
+            generateReportDto.DateRange.End);
+
         return await SaveReport(query, cancellationToken);
     }
 

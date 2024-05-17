@@ -34,30 +34,33 @@ public static class DependencyInjection
 
         services.AddTransient<IExpectsCurrency, ReportBuilder>();
 
-        services.AddSingleton<CreateDailyReportHandler>();
-        services.AddSingleton<CreateWeeklyReportHandler>();
-        services.AddSingleton<ICreateReportHandler, CreateMonthlyReportHandler>();
-
+        services.AddReportHandlers();
         services.AddSingleton<CurrencyConversionService>();
         services.AddSingleton<ReportMakerFacade>();
-
-        services.SetCreateReportHandlersChain();
 
         services.AddKeyedTransient<IReportFileSaver, JsonReportFileSaver>("save-report-json");
         services.AddKeyedTransient<IReportFileSaver, XmlReportFileSaver>("save-report-xml");
 
-
         return services;
     }
 
-    public static void SetCreateReportHandlersChain(this IServiceCollection services)
+    public static void AddReportHandlers(this IServiceCollection services)
     {
-        ICreateReportHandler createMonthlyReportHandler = services.BuildServiceProvider().GetService<ICreateReportHandler>()!;
-        ICreateReportHandler createWeeklyReportHandler = services.BuildServiceProvider().GetService<CreateWeeklyReportHandler>()!;
-        ICreateReportHandler createDailyReportHandler = services.BuildServiceProvider().GetService<CreateDailyReportHandler>()!;
+        services.AddSingleton<CreateDailyReportHandler>();
+        services.AddSingleton<CreateWeeklyReportHandler>();
+        services.AddSingleton<CreateMonthlyReportHandler>();
 
-        createMonthlyReportHandler
-            .SetNext(createWeeklyReportHandler)
-            .SetNext(createDailyReportHandler);
+        services.AddSingleton<ICreateReportHandler>(provider =>
+        {
+            var createDailyReportHandler = provider.GetRequiredService<CreateDailyReportHandler>();
+            var createWeeklyReportHandler = provider.GetRequiredService<CreateWeeklyReportHandler>();
+            var createMonthlyReportHandler = provider.GetRequiredService<CreateMonthlyReportHandler>();
+
+            createMonthlyReportHandler
+                .SetNext(createWeeklyReportHandler)
+                .SetNext(createDailyReportHandler);
+
+            return createMonthlyReportHandler;
+        });
     }
 }

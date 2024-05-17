@@ -16,10 +16,6 @@ internal class EditCategoryCommandValidator : AbstractValidator<EditCategoryComm
 {
     public EditCategoryCommandValidator()
     {
-        RuleFor(cmd => cmd.Category.UserId)
-            .NotEmpty()
-            .WithMessage("User Id must not be empty.");
-
         RuleFor(cmd => cmd.Category.Name)
             .NotEmpty()
             .WithMessage("Name must not be empty.");

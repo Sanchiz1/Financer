@@ -28,7 +28,7 @@ public class CategoriesController : BaseApiController
         [FromBody] TransactionCategoryDto category,
         CancellationToken cancellationToken)
     {
-        var command = new CreateCategoryCommand(category);
+        var command = new CreateCategoryCommand(this.UserId, category);
         return HandleResult(await this.Mediator.Send(command, cancellationToken));
     }
 

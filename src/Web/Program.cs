@@ -1,8 +1,5 @@
 using Application;
 using Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Web.Infrastructure;
 using Web.Middleware;
 
@@ -18,43 +15,6 @@ internal class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        builder.Services.AddAuthentication(x =>
-        {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"])),
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true
-                };
-            })
-            .AddCookie(options =>
-            {
-                options.Cookie.IsEssential = true;
-            })
-            /*.AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-            })*/;
-
-
-        //Cookie Policy needed for External Auth
-        builder.Services.Configure<CookiePolicyOptions>(options =>
-        {
-            options.MinimumSameSitePolicy = SameSiteMode.Lax;
-        });
 
         builder.Services.AddCors();
 
@@ -80,7 +40,7 @@ internal class Program
                    .AllowAnyMethod();
         });
 
-        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        //app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         app.UseCookiePolicy();
 

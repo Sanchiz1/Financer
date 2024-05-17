@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "6a871dca-727a-4e7d-a75e-cd520a23fd42",
+		"name": "Financer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29519056"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200) \r",
+									"{\r",
+									"    pm.environment.set('authToken', pm.response.json().token)\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"bob@test.com\",\r\n  \"password\": \"!!Qwerty123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Accounts/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Robert\",\r\n  \"lastName\": \"Brown\",\r\n  \"email\": \"bob@test.com\",\r\n  \"password\": \"!!Qwerty123\",\r\n  \"preferredCurrency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Accounts/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Accounts",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Currency",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"USD\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Accounts/currency",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Accounts",
+								"currency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Accounts/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Accounts",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Categories/88d1f848-7eb3-4e50-2d27-08dc75b0d577",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Categories",
+								"88d1f848-7eb3-4e50-2d27-08dc75b0d577"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"userId\": \"9C7B6F9D-DFB1-4C21-79E4-08DC75AD8CE4\",\r\n  \"name\": \"Dividends\",\r\n  \"description\": \"Test category description\",\r\n  \"operationType\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Transactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/Transactions/d459ba9e-c62e-40d7-a4f3-c356ba9f01d1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Transactions",
+								"d459ba9e-c62e-40d7-a4f3-c356ba9f01d1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InDateRange",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"start\": \"2024-05-01\",\r\n  \"end\": \"2024-05-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Transactions/range",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Transactions",
+								"range"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"categoryId\": \"b127da3a-fb8c-4f4f-cfb5-08dc7636330a\",\r\n  \"moneyAmount\": 50,\r\n  \"moneyCurrency\": \"USD\",\r\n  \"description\": \"Test description\",\r\n  \"operationDate\": \"2024-05-16T14:05:36.912Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Transactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Generate",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"UAH\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-01\",\r\n    \"end\": \"2024-05-30\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Reports",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveJson",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"USD\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-01\",\r\n    \"end\": \"2024-05-30\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Reports/save/json",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Reports",
+								"save",
+								"json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveXml",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"UAH\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-01\",\r\n    \"end\": \"2024-05-30\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Reports/save/xml",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Reports",
+								"save",
+								"xml"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://localhost:7225/api",
+			"type": "string"
+		}
+	]
+}

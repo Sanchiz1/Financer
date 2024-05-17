@@ -12,8 +12,8 @@ public class TransactionCategory : Entity<Guid>
     public TransactionCategory(Guid userId, Name name, Description description, OperationType operationType)
     {
         UserId = userId;
-        Name = name;
-        Description = description;
-        OperationType = operationType;
+        this.Name = name;
+        this.Description = description;
+        this.OperationType = operationType;
     }
 }

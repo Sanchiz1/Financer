@@ -8,21 +8,16 @@ public abstract class CreateReportHandler : ICreateReportHandler
 
     public ICreateReportHandler SetNext(ICreateReportHandler nextHandler)
     {
-        _nextHandler = nextHandler;
+        this._nextHandler = nextHandler;
 
         return nextHandler;
     }
 
     public virtual Report CreateReport(IEnumerable<Transaction> transactions)
     {
-        if (_nextHandler != null)
-        {
-            return _nextHandler.CreateReport(transactions);
-        }
-        else
-        {
-            throw new Exception("Suitable handler was not implemented");
-        }
+        return this._nextHandler != null 
+            ? this._nextHandler.CreateReport(transactions) 
+            : throw new Exception("Suitable handler was not implemented");
     }
 
     protected Currency GetCurrency(IEnumerable<Transaction> transactions)

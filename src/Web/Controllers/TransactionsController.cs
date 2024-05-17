@@ -25,11 +25,10 @@ public class TransactionsController : BaseApiController
 
     [HttpGet("range")]
     public async Task<IActionResult> GetTransactions(
-        DateOnly startDate,
-        DateOnly endDate,
+        [FromBody] DateRangeDto dateRange, 
         CancellationToken cancellationToken)
     {
-        var query = new GetTransactionsInDateRangeQuery(this.UserId, startDate, endDate);
+        var query = new GetTransactionsInDateRangeQuery(this.UserId, dateRange.Start, dateRange.End);
         return HandleResult(await this.Mediator.Send(query, cancellationToken));
     }
 
@@ -48,7 +47,7 @@ public class TransactionsController : BaseApiController
         [FromBody] TransactionDto transactionDto,
         CancellationToken cancellationToken)
     {
-        transactionDto = transactionDto with { Id = id };
+        transactionDto.Id = id;
         var command = new EditTransactionCommand(this.UserId, transactionDto);
         return HandleResult(await this.Mediator.Send(command, cancellationToken));
     }

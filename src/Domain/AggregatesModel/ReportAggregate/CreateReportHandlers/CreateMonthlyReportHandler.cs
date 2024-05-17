@@ -18,7 +18,8 @@ public class CreateMonthlyReportHandler : CreateReportHandler
         {
             var currency = GetCurrency(transactions);
 
-            var report = _reportBuilder.WithCurrency(currency)
+            var report = _reportBuilder
+                .WithCurrency(currency)
                 .WithMonthlySummary(transactions)
                 .Build();
 

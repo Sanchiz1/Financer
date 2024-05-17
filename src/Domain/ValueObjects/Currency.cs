@@ -14,6 +14,8 @@ public class Currency : ValueObject
     public static readonly Currency Eur = new("EUR");
     public static readonly Currency Uah = new("UAH");
 
+    public static readonly IReadOnlyCollection<Currency> All = [Usd, Eur, Uah];
+
     public static Currency FromCode(string code)
     {
         return All.FirstOrDefault(c => c.Code == code) ??
@@ -34,6 +36,4 @@ public class Currency : ValueObject
     {
         yield return this.Code;
     }
-
-    public static readonly IReadOnlyCollection<Currency> All = [Usd, Eur, Uah];
 }

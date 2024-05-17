@@ -40,7 +40,7 @@ internal class Program
                    .AllowAnyMethod();
         });
 
-        //app.UseMiddleware<ExceptionHandlingMiddleware>();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         app.UseCookiePolicy();
 

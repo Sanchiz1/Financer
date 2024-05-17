@@ -29,7 +29,7 @@ internal sealed class SaveReportJsonQueryHandler(
 
         var report = await this._reportMakerFacade.CreateReport(request.Currency, transactions);
 
-        byte[] jsonBytes = this._jsonSaver.SaveReport(report);
+        byte[] jsonBytes = this._jsonSaver.SaveReport(report.Value);
         string filename = $"report_{DateTime.Now:yyyyMMddHHmmss}.json";
 
         return new ReportFile(jsonBytes, "application/json", filename);

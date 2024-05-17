@@ -29,7 +29,7 @@ internal sealed class SaveReportXmlQueryHandler(
 
         var report = await this._reportMakerFacade.CreateReport(request.Currency, transactions);
 
-        byte[] xmlBytes = this._jsonSaver.SaveReport(report);
+        byte[] xmlBytes = this._jsonSaver.SaveReport(report.Value);
         string filename = $"report_{DateTime.Now:yyyyMMddHHmmss}.xml";
 
         return new ReportFile(xmlBytes, "application/xml", filename);

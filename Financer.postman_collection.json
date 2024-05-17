@@ -313,7 +313,7 @@
 			"name": "Reports",
 			"item": [
 				{
-					"name": "Generate",
+					"name": "GenerateMontly",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -323,6 +323,64 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"currency\": \"UAH\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-01\",\r\n    \"end\": \"2024-05-30\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Reports",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GenerateWeekly",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"USD\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-10\",\r\n    \"end\": \"2024-05-17\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/Reports",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"Reports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GenerateDaily",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"currency\": \"USD\",\r\n  \"dateRange\": {\r\n    \"start\": \"2024-05-16\",\r\n    \"end\": \"2024-05-16\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
